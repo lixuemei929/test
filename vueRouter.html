@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>命名路由</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+        .nav{
+            height: 44px;
+            text-align: center;
+        }
+        .box{
+            flex:1;
+            margin-top: 20px;
+        }
+        .router-link-active {
+            background: gold;
+            text-decoration: none;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="nav">
+            <router-link :to="{name:'home'}">首页</router-link>
+            <router-link :to="{name:'list',params:{id:'liebiao'}}">列表页</router-link>
+            <router-link :to="{name:'news'}">新闻页</router-link>
+            <router-link :to="{name:'shopping'}">购物页</router-link>
+        </div>
+        <div class="box">
+            <router-view></router-view>
+        </div>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        //定义路由组件
+        const home={
+            template:'<div>这是首页</div>'
+        };
+        const list= {
+            template: '<div>{{$route.params.id}}</div>'
+        };
+        const news={
+            template:'<div>这是新闻页</div>'
+        };
+        const shopping={
+            template:'<div>这是购物页</div>'
+        };
+
+        //配置路由规则
+        const routes=[
+            {
+                path:"",
+                component:home
+            },
+            {
+                path:"/home",
+                name:'home',
+                component:home
+            },
+            {
+                path:"/list/:id",
+                name:'list',
+                component:list
+            },
+            {
+                path:"/news",
+                name:'news',
+                component:news
+            },
+            {
+                path:"/shopping",
+                name:'shopping',
+                component:shopping
+            }
+
+        ]
+
+        //实例化路由
+        var router=new VueRouter({
+            routes
+        })
+
+        const app=new Vue({
+            router
+        }).$mount('#app');
+
+    </script>
+</body>
+</html>
